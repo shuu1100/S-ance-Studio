@@ -1,0 +1,1044 @@
+{
+  "schema_version": "1.0.0",
+  "id": "case_blackwood_thirteenth_chime",
+  "title": "Blackwood Manor: The Thirteenth Chime",
+  "subtitle": "A Victorian Occult Inquest",
+  "era": "October 1922",
+  "difficulty": "seasoned",
+  "description": "On the storm-wracked night of October 14, 1922, matriarch Lady Eleanor Blackwood died of suspected poison in her locked library as the grandfather clock chimed an impossible thirteenth strike. Convene with the living and the dead to reconstruct the crime before the ward candle burns down.",
+  "opening_narration": "The storm had severed the telegraph lines hours before midnight, leaving Blackwood Manor perched like a dark monolith upon the windswept Welsh cliffs. Rain thrashes against the leaded glass windows, and the vast stone halls smell of damp wool, bitter valerian, and dying hearths. Lady Eleanor Blackwood—matriarch of the Blackwood shipping empire and solitary scholar of the occult—lies lifeless upon the carpet of her locked study, an empty silver flask fallen beside her hand. When the grandfather clock tolled midnight, it did not cease at twelve: an impossible, hollow thirteenth chime rang through the timbers, stopping the clockwork dead at 12:13 AM. As Madame Vane ignites the protective circle of ward candles in the Séance Parlor, you step across the threshold as the court-appointed occult inquisitor. The living hold bitter secrets; the dead demand justice; and with every breath, the ward candle melts toward oblivion.",
+  "max_turns": 30,
+  "initial_objective": "Interview the Caretaker in the Foyer, commune with the Apparition in the Parlor, and unlock the crime scene.",
+  "starting_location_id": "room_foyer",
+  "active_entity_id": "char_apparition",
+
+  "characters": [
+    {
+      "id": "char_caretaker",
+      "name": "Arthur Briggs",
+      "title": "The Manor Caretaker",
+      "role_type": "caretaker",
+      "entity_type": "living",
+      "default_status": "guarded",
+      "avatar_seed": "caretaker",
+      "default_location_id": "room_foyer",
+      "public_biography": "Arthur has maintained Blackwood Manor for 35 years. Pragmatic, stoic, and fiercely protective of his grounds, he notices every physical disturbance but remains deeply suspicious of spiritualists and inquisitors.",
+      "private_secrets": "Arthur discovered the conservatory lock forced open the evening of Eleanor's death and found the apothecary rat poison missing from his potting bench. He kept quiet fearing he would be blamed for negligence.",
+      "personality": "Guarded, practical, blunt, and observant of mechanical and physical anomalies.",
+      "speaking_style": "Terse, dry, working-class Victorian dialect; avoids occult speculation.",
+      "initial_trust": 40,
+      "min_trust": 10,
+      "max_trust": 90,
+      "opening_greeting": "More inquisitors arriving in this infernal storm? Tread lightly upon the foyer parquet, stranger. Lady Eleanor lies cold upstairs, and whatever has been walking these corridors since the thirteenth chime doesn't take kindly to trespassers.",
+      "fallback_dialogue": "I'm only the estate caretaker, sir. If your question isn't about the grounds, the locks, or the clockwork gears, you'd best ask Miss Victoria or that medium chanting in the parlor.",
+      "knowledge_boundaries": {
+        "always_known_facts": [
+          "The grandfather clock chimed thirteen times at midnight, which is mechanically impossible unless someone altered the escapement gear.",
+          "The library door was locked from the inside when the body was found.",
+          "Lord Julian visited the estate unexpectedly at 9:00 PM demanding money."
+        ],
+        "conditional_facts": {
+          "clue_arsenic_vial": "The amber vial came from my potting bench. I noticed it was taken right before Julian rushed out into the gardens.",
+          "clue_thirteenth_chime": "I saw Julian carrying a jeweler's file in his pocket during dinner. He claimed he was fixing a pocket watch."
+        },
+        "strictly_forbidden_knowledge": [
+          "The legal clauses of Eleanor's revised will.",
+          "Post-mortem spiritual impressions from the séance.",
+          "Victoria's private correspondence in London."
+        ]
+      },
+      "presentation_triggers": {
+        "clue_thirteenth_chime": {
+          "trust_delta": 15,
+          "response_dialogue": "Aye, that escapement gear has fresh file marks. Someone deliberately filed down the stop pin so it would strike thirteen. Julian asked me two days ago how the chime assembly operated.",
+          "emotional_cue": "Validated Realism",
+          "atmospheric_cue": "Distant thunder rumbles across the grounds",
+          "revealed_fact": "Julian asked Arthur about the clock chime mechanics two days prior to Eleanor's demise.",
+          "unlocks_topic_id": "topic_clock_tampering",
+          "sets_flags": { "caretaker_acknowledged_clock": true }
+        },
+        "clue_arsenic_vial": {
+          "trust_delta": 15,
+          "response_dialogue": "God forgive me... that is the rat poison from my potting shed. I found the shed padlock broken at ten that night. I saw someone in a dark crimson coat fleeing toward the west terrace.",
+          "emotional_cue": "Conflicted Guilt",
+          "atmospheric_cue": "Arthur grips his brass lantern tightly with trembling knuckles",
+          "revealed_fact": "The poison was taken from Arthur's shed by someone wearing a crimson velvet coat.",
+          "unlocks_topic_id": "topic_poison_shed",
+          "sets_flags": { "caretaker_admitted_poison_source": true }
+        },
+        "clue_silver_flask": {
+          "trust_delta": 5,
+          "response_dialogue": "Lady Eleanor's silver cordial flask. She never let anyone touch it except her kin. Julian poured her nightcap that evening—I saw him carry the tray from the pantry.",
+          "emotional_cue": "Stern Eyewitness",
+          "revealed_fact": "Julian prepared and carried the cordial tray to Eleanor's library on the night of the murder.",
+          "sets_flags": { "caretaker_witnessed_tray": true }
+        }
+      },
+      "dialogue_topics": [
+        {
+          "id": "topic_grounds_patrol",
+          "label": "Movements Around Midnight",
+          "inquiry_text": "Did you see anyone in the corridors when the clock struck thirteen?",
+          "response_dialogue": "I was checking the courtyard shutters against the storm. As the thirteenth chime sounded, the library lights went out, and heavy footsteps bolted up the servants' stairwell toward Julian's quarters.",
+          "emotional_cue": "Attentive",
+          "min_trust_required": 30,
+          "trust_delta": 2,
+          "revealed_fact": "Heavy footsteps bolted to Julian's quarters immediately after the thirteenth chime."
+        },
+        {
+          "id": "topic_clock_tampering",
+          "label": "The Chime Mechanism",
+          "inquiry_text": "Who had access to the astronomical clock's internal cabinet?",
+          "response_dialogue": "Only myself and the master keyholder. But Julian took the foyer key from the keybox after tea, claiming he wanted to wind the pendulum.",
+          "emotional_cue": "Grim Realization",
+          "min_trust_required": 50,
+          "required_clue_ids": ["clue_thirteenth_chime"],
+          "trust_delta": 5,
+          "revealed_fact": "Julian possessed the clock cabinet key on the night of the murder."
+        },
+        {
+          "id": "topic_poison_shed",
+          "label": "The Potting Shed Theft",
+          "inquiry_text": "Why didn't you report the stolen rat eradicating arsenic immediately?",
+          "response_dialogue": "Julian threatened to throw me off the estate without a reference if I caused a scandal. He knew my pension was unpaid. But murder is where my silence ends.",
+          "emotional_cue": "Resolute Defiance",
+          "min_trust_required": 55,
+          "required_clue_ids": ["clue_arsenic_vial"],
+          "trust_delta": 10,
+          "revealed_fact": "Julian coerced Arthur with threats of eviction to conceal the shed break-in."
+        }
+      ]
+    },
+    {
+      "id": "char_daughter",
+      "name": "Victoria Blackwood",
+      "title": "The Estranged Daughter",
+      "role_type": "daughter",
+      "entity_type": "living",
+      "default_status": "evasive",
+      "avatar_seed": "daughter",
+      "default_location_id": "room_foyer",
+      "public_biography": "Victoria returned to Blackwood Manor three days before Eleanor's demise. Educated in London, she carries deep emotional scars from her mother's authoritarian reign, yet remains devoted to preserving the family honor.",
+      "private_secrets": "Victoria discovered that Eleanor had completely disinherited Julian after learning of his catastrophic gambling debts. Victoria found the will fragment burning in the hearth and hid the remaining documents to protect the family from bankruptcy.",
+      "personality": "Emotionally conflicted, intellectual, defensive, torn between grief and resentment.",
+      "speaking_style": "Eloquent, precise, guarded, with undertones of suppressed emotional agitation.",
+      "initial_trust": 35,
+      "min_trust": 10,
+      "max_trust": 95,
+      "opening_greeting": "If you have come from Scotland Yard or the county coroner, you are wasting your inquiries on me. My mother locked her life away inside that study, and those who sought her favor usually ended up with ashes.",
+      "fallback_dialogue": "I cannot help you with that. My mother kept her private transactions guarded even from her own daughter, and I will not engage in idle speculation.",
+      "knowledge_boundaries": {
+        "always_known_facts": [
+          "Eleanor suffered from acute insomnia and drank valerian cordial every night at 11:30 PM.",
+          "Julian owed upwards of eight thousand pounds to criminal moneylenders in Mayfair.",
+          "Eleanor threatened Julian with public disinheritance the morning of her death."
+        ],
+        "conditional_facts": {
+          "clue_burned_will": "I pulled this from the fireplace. Julian threw it in when he realized Mother had signed it before the solicitor.",
+          "clue_torn_velvet": "That velvet shred came from Julian's smoking jacket. He wore it that evening."
+        },
+        "strictly_forbidden_knowledge": [
+          "Mechanical alterations to the clock gears.",
+          "The exact botanical composition of the arsenic poison.",
+          "The existence of the catacomb key hidden in the cellar."
+        ]
+      },
+      "presentation_triggers": {
+        "clue_burned_will": {
+          "trust_delta": 20,
+          "response_dialogue": "You found it... Yes! Mother rewrote her will to strip Julian of every cent. He discovered the draft on her desk. When I confronted him in the foyer, he threw it into the marble hearth. I burned my fingers snatching that fragment back!",
+          "emotional_cue": "Unburdened Grief",
+          "atmospheric_cue": "Victoria's voice trembles as she wipes away cold tears",
+          "revealed_fact": "Julian threw Eleanor's disinheriting will into the hearth after confronting Victoria.",
+          "unlocks_topic_id": "topic_confrontation_julian",
+          "sets_flags": { "daughter_confessed_will": true }
+        },
+        "clue_torn_velvet": {
+          "trust_delta": 15,
+          "response_dialogue": "Julian's crimson velvet smoking jacket. He tore it against the library doorplate while forcing his way in. Take Father's brass crypt key—Julian hid his private poison transactions in the vaulted cellar behind barrel rack 12.",
+          "emotional_cue": "Chilled Realization",
+          "revealed_fact": "Julian's velvet jacket was torn on the library door; Victoria provided the crypt key to search the cellar.",
+          "unlocks_topic_id": "topic_crypt_secret",
+          "sets_flags": { "daughter_verified_jacket": true, "has_crypt_key": true }
+        },
+        "clue_silver_flask": {
+          "trust_delta": 10,
+          "response_dialogue": "Mother's silver flask... When Julian brought it to her, he smiled so warmly. He told her: 'Drink deep, Aunt Eleanor; tomorrow all your debts will be forgiven.'",
+          "emotional_cue": "Horrified Recollection",
+          "revealed_fact": "Julian told Eleanor 'tomorrow all your debts will be forgiven' while handing her the poisoned flask.",
+          "sets_flags": { "daughter_quoted_julian": true }
+        }
+      },
+      "dialogue_topics": [
+        {
+          "id": "topic_family_debts",
+          "label": "Julian's Financial Desperation",
+          "inquiry_text": "How severe was Julian's financial peril?",
+          "response_dialogue": "Letters arrived daily bearing wax seals of London loan sharks. Julian begged Mother for a five-thousand-pound loan. She told him she would sooner burn Blackwood Manor to the ground than fund his ruin.",
+          "emotional_cue": "Bitter",
+          "min_trust_required": 35,
+          "trust_delta": 3,
+          "revealed_fact": "Eleanor flatly refused Julian's plea for a £5,000 bailout hours before her death."
+        },
+        {
+          "id": "topic_confrontation_julian",
+          "label": "The Foyer Confrontation",
+          "inquiry_text": "What happened between you and Julian after the will was burned?",
+          "response_dialogue": "He warned me that if I spoke to the police, he would swear I poisoned the cordial. He hid his private transactions in the vaulted cellar. Take my key—open the crypt gate and see his poison ledger for yourself.",
+          "emotional_cue": "Urgent",
+          "min_trust_required": 55,
+          "required_clue_ids": ["clue_burned_will"],
+          "trust_delta": 10,
+          "revealed_fact": "Julian hid his poison transaction ledger in the vaulted crypt cellar.",
+          "sets_flags": { "daughter_revealed_crypt_key": true }
+        },
+        {
+          "id": "topic_crypt_secret",
+          "label": "The Vaulted Cellar",
+          "inquiry_text": "How can I access Julian's hidden documents in the sub-level vaults?",
+          "response_dialogue": "The iron catacomb gate requires Father's brass key. I kept it hidden in my locket. Take it. Search barrel rack 12 behind the old vintage port.",
+          "emotional_cue": "Solemn Trust",
+          "min_trust_required": 65,
+          "required_clue_ids": ["clue_torn_velvet"],
+          "trust_delta": 5,
+          "revealed_fact": "The poison ledger is concealed behind barrel rack 12 in the cellar.",
+          "sets_flags": { "has_crypt_key": true }
+        }
+      ]
+    },
+    {
+      "id": "char_apparition",
+      "name": "Lady Eleanor's Apparition",
+      "title": "The Restless Spirit",
+      "role_type": "apparition",
+      "entity_type": "spirit",
+      "default_status": "restless",
+      "avatar_seed": "apparition",
+      "default_location_id": "room_seance",
+      "public_biography": "The spiritual manifestation of Lady Eleanor Blackwood. Summoned through Madame Vane's trance circle, she hovers in the cold ether of the Séance Parlor, trapped at the threshold between life and death.",
+      "private_secrets": "Remembers the sensation of fire in her lungs and the sound of Julian's mocking laughter as the clock struck thirteen.",
+      "personality": "Cryptic, sorrowful, wrathful when contradicted, fading quickly if psychic tension spikes.",
+      "speaking_style": "Poetic, archaic, fragmented; speaks of sensory impressions rather than objective dates.",
+      "initial_trust": 60,
+      "min_trust": 20,
+      "max_trust": 100,
+      "opening_greeting": "The candle flickers... flesh and blood steps into the circle... Do you feel the frost creeping across the looking-glass? The bells... they struck twelve... and then that hollow, mocking thirteenth toll... Who calls Eleanor from the cold abyss?",
+      "fallback_dialogue": "The shadows drift... the ether grows cold... Your mortal words stir no memory in my spirit. Speak of the silver flask... the chime that stole my breath... or the traitor who kissed my brow.",
+      "knowledge_boundaries": {
+        "always_known_facts": [
+          "The cordial tasted of burning copper and bitter almonds.",
+          "The grandfather clock chimed twelve normal bells, then paused, followed by a heavy, hollow thirteenth chime.",
+          "A figure dressed in crimson velvet closed the library door and turned the key from outside."
+        ],
+        "conditional_facts": {
+          "clue_silver_flask": "My hands trembled... I dropped the flask onto the parquet when my heart seized.",
+          "clue_thirteenth_chime": "The thirteenth chime was his signal... he told me the bells would ring for my funeral."
+        },
+        "strictly_forbidden_knowledge": [
+          "Events that took place after the parlor clock stopped.",
+          "The arrival of Scotland Yard or forensic detectives.",
+          "Modern or anachronistic knowledge."
+        ]
+      },
+      "presentation_triggers": {
+        "clue_silver_flask": {
+          "trust_delta": 15,
+          "response_dialogue": "The silver flask... it burns my spectral sight even now! He handed it to me with a Judas kiss upon my brow. 'Drink, Aunt Eleanor, and sleep peacefully.' Then came the fire in my veins!",
+          "emotional_cue": "Wrathful Agony",
+          "atmospheric_cue": "Planchette violently vibrates across the mahogany table",
+          "revealed_fact": "Julian kissed Eleanor's brow and urged her to drink the cordial immediately prior to her death.",
+          "unlocks_topic_id": "topic_death_moment",
+          "sets_flags": { "apparition_remembered_flask": true }
+        },
+        "clue_thirteenth_chime": {
+          "trust_delta": 15,
+          "response_dialogue": "The clock! One... two... eleven, twelve... and then the dreadful THIRTEENTH! He laughed behind the curtains as the bell tolled. He said the thirteenth chime would drown my dying gasp!",
+          "emotional_cue": "Vindicated Terror",
+          "atmospheric_cue": "Room temperature plunges below freezing; frost creeps on glass",
+          "revealed_fact": "The murderer timed the lethal seizure to coincide with the thirteenth chime to muffle her cries.",
+          "unlocks_topic_id": "topic_spectral_farewell",
+          "sets_flags": { "apparition_confirmed_clock": true }
+        },
+        "clue_crypt_journal": {
+          "trust_delta": 15,
+          "response_dialogue": "His ledger... his calculating black heart laid bare upon paper! He weighed my life against his gambling debts! Let justice be done so my soul may depart this cold house!",
+          "emotional_cue": "Transfigured Peace",
+          "atmospheric_cue": "Candle flame turns from harsh blue to soft amber gold",
+          "revealed_fact": "Eleanor recognized Julian's handwriting and motive in the poison ledger.",
+          "sets_flags": { "apparition_demands_justice": true }
+        }
+      },
+      "dialogue_topics": [
+        {
+          "id": "topic_death_moment",
+          "label": "The Final Breath",
+          "inquiry_text": "What did you see as darkness claimed your vision?",
+          "response_dialogue": "I saw his ring—the Blackwood signet in onyx and gold. His hand snatched the will from my escritoire while I gasped for air on the carpet.",
+          "emotional_cue": "Haunted",
+          "min_trust_required": 70,
+          "required_clue_ids": ["clue_silver_flask"],
+          "trust_delta": 5,
+          "revealed_fact": "The killer wore the Blackwood onyx signet ring and stole the will while Eleanor collapsed."
+        },
+        {
+          "id": "topic_spectral_farewell",
+          "label": "Laying the Spirit to Rest",
+          "inquiry_text": "What is required to release you from this torment?",
+          "response_dialogue": "Unmask the crimson traitor before mortal law. Present the flask, the clock escapement, and his handwritten poison pact to the magistrate.",
+          "emotional_cue": "Expectant",
+          "min_trust_required": 75,
+          "required_clue_ids": ["clue_thirteenth_chime"],
+          "trust_delta": 5,
+          "revealed_fact": "Eleanor's spirit will only rest if presented with the triad: flask, clockwork, and poison ledger."
+        }
+      ]
+    }
+  ],
+
+  "clues": [
+    {
+      "id": "clue_silver_flask",
+      "title": "Silver Cordial Flask & Phonograph Transcript",
+      "subtitle": "Exhibit A-1 • Physical & Recorded Testimony",
+      "category": "physical",
+      "description": "Found beside Eleanor's wingback chair in the library. Chemical swab confirms concentrated arsenic trioxide with distinct bitter almond scent. An overturned wax phonograph cylinder beside the table captured Eleanor's labored breathing and a faint voice whispering: 'Drink deep, Aunt Eleanor.'",
+      "source_location": "Library of Whispers • Armchair Table",
+      "evidence_marker": "A-1",
+      "is_key_evidence": true,
+      "initially_revealed": true,
+      "associated_suspects": ["char_caretaker", "char_daughter"],
+      "prerequisites": {
+        "required_location_id": "room_library",
+        "required_hotspot_id": "hs_armchair"
+      },
+      "discovery_effects": {
+        "unlocked_locations": ["room_conservatory"]
+      }
+    },
+    {
+      "id": "clue_burned_will",
+      "title": "Charred Will Fragment & Torn Letter",
+      "subtitle": "Exhibit B-3 • Document",
+      "category": "document",
+      "description": "Retrieved from the Grand Foyer marble fireplace. Eleanor's legal bequest disinheriting her nephew Julian in favor of Victoria, stating: 'Having uncovered Julian's monstrous debts and duplicity, I revoke all prior gifts.' The draft is torn roughly across the wax solicitor seal.",
+      "source_location": "The Grand Foyer • Marble Fireplace",
+      "evidence_marker": "B-3",
+      "is_key_evidence": true,
+      "initially_revealed": true,
+      "associated_suspects": ["char_daughter"],
+      "prerequisites": {
+        "required_location_id": "room_foyer",
+        "required_hotspot_id": "hs_hearth"
+      },
+      "discovery_effects": {
+        "unlocked_locations": ["room_library"]
+      }
+    },
+    {
+      "id": "clue_thirteenth_chime",
+      "title": "Stopped Grandfather Clock & Tampered Escapement",
+      "subtitle": "Exhibit C-1 • Physical Mechanism",
+      "category": "physical",
+      "description": "The astronomical grandfather clock chime assembly in the foyer stopped at 12:13 AM. Internal examination reveals the brass escapement gear and count-wheel stop pin were filed down with a miniature jeweler's rasp, causing an impossible thirteenth strike at midnight before jamming the pendulum.",
+      "source_location": "The Grand Foyer • Astronomical Clock",
+      "evidence_marker": "C-1",
+      "is_key_evidence": true,
+      "initially_revealed": false,
+      "associated_suspects": ["char_caretaker"],
+      "prerequisites": {
+        "required_location_id": "room_foyer",
+        "required_hotspot_id": "hs_clock"
+      }
+    },
+    {
+      "id": "clue_arsenic_vial",
+      "title": "Amber Apothecary Vial & Marked Potting Plan",
+      "subtitle": "Exhibit D-2 • Physical & Botanical",
+      "category": "physical",
+      "description": "A 4-oz ribbed amber glass bottle labeled 'Rat Eradicator - Arsenic Trioxide' concealed behind terracotta planters in the conservatory. Tucked beneath the tray is a marked estate floor plan with the potting shed tool rack circled in red ink.",
+      "source_location": "The Iron Conservatory • Aconite Bed",
+      "evidence_marker": "D-2",
+      "is_key_evidence": true,
+      "initially_revealed": false,
+      "associated_suspects": ["char_caretaker"],
+      "prerequisites": {
+        "required_location_id": "room_conservatory",
+        "required_hotspot_id": "hs_botanicals",
+        "required_clue_ids": ["clue_silver_flask"]
+      }
+    },
+    {
+      "id": "clue_torn_velvet",
+      "title": "Torn Crimson Velvet Shred & Brass Crypt Key",
+      "subtitle": "Exhibit E-3 • Physical & Key",
+      "category": "physical",
+      "description": "A fabric shred snagged on the brass library lock plate matching the crimson velvet jacket worn by Lord Julian on the night of the murder. Presenting this to Victoria prompts her to yield her father's heavy brass crypt key to unlock the sub-level vaults.",
+      "source_location": "Library of Whispers • Threshold Lock",
+      "evidence_marker": "E-3",
+      "is_key_evidence": false,
+      "initially_revealed": false,
+      "associated_suspects": ["char_daughter"],
+      "prerequisites": {
+        "required_location_id": "room_library",
+        "required_hotspot_id": "hs_threshold",
+        "required_clue_ids": ["clue_burned_will"]
+      }
+    },
+    {
+      "id": "clue_crypt_journal",
+      "title": "Alchemist's Poison Ledger & Hidden Diary",
+      "subtitle": "Exhibit F-4 • Document & Confession",
+      "category": "document",
+      "description": "Julian's hidden leather-bound diary found behind barrel rack 12 in the crypt cellar. Details £8,000 in debts to Mayfair syndicates, drafts of forged codicils, and a chilling calculation: 'Arsenic in the 11:30 valerian cordial. The thirteenth chime will conceal her gasps.'",
+      "source_location": "The Vaulted Crypt Cellar • Barrel Rack 12",
+      "evidence_marker": "F-4",
+      "is_key_evidence": true,
+      "initially_revealed": false,
+      "associated_suspects": ["char_daughter"],
+      "prerequisites": {
+        "required_location_id": "room_cellar",
+        "required_hotspot_id": "hs_barrel_rack",
+        "required_clue_ids": ["clue_torn_velvet"],
+        "required_flags": { "has_crypt_key": true }
+      }
+    }
+  ],
+
+  "locations": [
+    {
+      "id": "room_foyer",
+      "name": "The Grand Foyer",
+      "subtitle": "Ground Floor • Central Hall",
+      "description": "Grand mahogany staircase beneath a towering astronomical grandfather clock. Ash litters the open hearth beneath high vaulted beams.",
+      "unlocked_by_default": true,
+      "hotspots": [
+        {
+          "id": "hs_clock",
+          "label": "Astronomical Clock",
+          "description": "Stopped at 12:13 AM. The gear escapement shows fresh file marks.",
+          "unlocks_clue_id": "clue_thirteenth_chime"
+        },
+        {
+          "id": "hs_hearth",
+          "label": "Marble Fireplace",
+          "description": "Charred parchment scraps bearing Eleanor's wax seal.",
+          "unlocks_clue_id": "clue_burned_will"
+        }
+      ]
+    },
+    {
+      "id": "room_seance",
+      "name": "The Séance Parlor",
+      "subtitle": "East Wing • Ground Floor",
+      "description": "Draped in heavy black velvet. An antique circular mahogany table is surrounded by silver bells and flickering ward candles.",
+      "unlocked_by_default": true,
+      "hotspots": [
+        {
+          "id": "hs_table",
+          "label": "Spirit Planchette",
+          "description": "The planchette rests on cold mahogany, waiting for communion with the spirit world."
+        }
+      ]
+    },
+    {
+      "id": "room_library",
+      "name": "Library of Whispers",
+      "subtitle": "West Wing • First Floor",
+      "description": "The locked crime scene. Towering oak bookcases, leather wingback armchair, and heavy velvet curtains smelling faintly of bitter almonds.",
+      "unlocked_by_default": false,
+      "unlock_conditions": {
+        "required_clue_ids": ["clue_burned_will"],
+        "min_character_trust": { "char_caretaker": 40 }
+      },
+      "hotspots": [
+        {
+          "id": "hs_armchair",
+          "label": "Eleanor's Wingback Chair",
+          "description": "Where Lady Eleanor was discovered clutching her silver cordial flask.",
+          "unlocks_clue_id": "clue_silver_flask"
+        },
+        {
+          "id": "hs_threshold",
+          "label": "Library Door Lock Plate",
+          "description": "The brass plate has a torn fabric thread snagged on the bolt.",
+          "unlocks_clue_id": "clue_torn_velvet"
+        }
+      ]
+    },
+    {
+      "id": "room_conservatory",
+      "name": "The Iron Conservatory",
+      "subtitle": "South Pavilion",
+      "description": "Damp Victorian glasshouse overgrown with exotic flora, aconite potting beds, and nightshades battered by the coastal storm.",
+      "unlocked_by_default": false,
+      "unlock_conditions": {
+        "required_clue_ids": ["clue_silver_flask"],
+        "min_character_trust": { "char_caretaker": 50 }
+      },
+      "hotspots": [
+        {
+          "id": "hs_botanicals",
+          "label": "Aconite Potting Bed",
+          "description": "Dark amber glass bottle concealed behind terracotta pots.",
+          "unlocks_clue_id": "clue_arsenic_vial"
+        }
+      ]
+    },
+    {
+      "id": "room_cellar",
+      "name": "The Vaulted Crypt Cellar",
+      "subtitle": "Sub-level Crypts",
+      "description": "Dank cobblestone arches, ancient iron wine racks, and the padlocked ancestral vault beneath the manor.",
+      "unlocked_by_default": false,
+      "unlock_conditions": {
+        "required_clue_ids": ["clue_torn_velvet"],
+        "min_character_trust": { "char_daughter": 60 },
+        "required_flags": { "has_crypt_key": true }
+      },
+      "hotspots": [
+        {
+          "id": "hs_barrel_rack",
+          "label": "Barrel Rack 12",
+          "description": "A hollow compartment behind vintage port barrels.",
+          "unlocks_clue_id": "clue_crypt_journal"
+        }
+      ]
+    }
+  ],
+
+  "permitted_connections": [
+    {
+      "from_clue_id": "clue_silver_flask",
+      "to_clue_id": "clue_arsenic_vial",
+      "relationship": "weapon_match",
+      "label": "Toxicological Match",
+      "reason": "Chemical residue in the silver cordial flask matches the arsenic trioxide crystals in the conservatory vial."
+    },
+    {
+      "from_clue_id": "clue_burned_will",
+      "to_clue_id": "clue_silver_flask",
+      "relationship": "implicates",
+      "label": "Motive of Disinheritance",
+      "reason": "The burned will disinheriting Julian directly provides the motive for administering the lethal cordial."
+    },
+    {
+      "from_clue_id": "clue_thirteenth_chime",
+      "to_clue_id": "clue_silver_flask",
+      "relationship": "weapon_match",
+      "label": "Temporal Murder Window",
+      "reason": "The tampered clock mechanism timed the death to coincide precisely with the impossible thirteenth chime."
+    },
+    {
+      "from_clue_id": "clue_burned_will",
+      "to_clue_id": "clue_torn_velvet",
+      "relationship": "alibi_for",
+      "label": "Physical Presence at Crime Scene",
+      "reason": "The crimson velvet fiber proves the disinherited nephew was forcing his way into the library during the fatal hour."
+    },
+    {
+      "from_clue_id": "clue_crypt_journal",
+      "to_clue_id": "clue_arsenic_vial",
+      "relationship": "weapon_match",
+      "label": "Documented Poison Purchase",
+      "reason": "The handwritten ledger explicitly logs the acquisition of the apothecary arsenic to eliminate Eleanor."
+    }
+  ],
+
+  "choices": [
+    {
+      "id": "choice_examine_hearth",
+      "label": "Examine Fireplace Hearth",
+      "action_type": "INSPECT",
+      "target_id": "hs_hearth",
+      "decision_text": "Sifted through the marble hearth ashes in the Grand Foyer.",
+      "impact_text": "Recovered the charred fragment of Lady Eleanor's revised will.",
+      "reveals_clue_id": "clue_burned_will"
+    },
+    {
+      "id": "choice_inspect_clock",
+      "label": "Inspect Astronomical Clock",
+      "action_type": "INSPECT",
+      "target_id": "hs_clock",
+      "decision_text": "Examined the internal brass escapement of the stopped grandfather clock.",
+      "impact_text": "Discovered fresh file marks on the stop pin forcing an impossible thirteenth chime.",
+      "reveals_clue_id": "clue_thirteenth_chime"
+    },
+    {
+      "id": "choice_unlock_library",
+      "label": "Unlock Library Crime Scene",
+      "action_type": "MOVE",
+      "target_id": "room_library",
+      "decision_text": "Convinced Arthur Briggs to unlock the second-floor study door.",
+      "impact_text": "Entered the Library of Whispers where Lady Eleanor met her end.",
+      "prerequisite_clue_ids": ["clue_burned_will"],
+      "unlocks_location_id": "room_library"
+    },
+    {
+      "id": "choice_search_armchair",
+      "label": "Examine Eleanor's Armchair",
+      "action_type": "INSPECT",
+      "target_id": "hs_armchair",
+      "decision_text": "Inspected the wingback chair and dictation table in the library.",
+      "impact_text": "Discovered the silver cordial flask smelling of bitter almonds and phonograph cylinder.",
+      "reveals_clue_id": "clue_silver_flask"
+    },
+    {
+      "id": "choice_examine_threshold",
+      "label": "Inspect Study Threshold",
+      "action_type": "INSPECT",
+      "target_id": "hs_threshold",
+      "decision_text": "Examined the brass doorplate and lock mechanism of the study.",
+      "impact_text": "Found a torn shred of crimson velvet caught upon the lock bolt.",
+      "prerequisite_clue_ids": ["clue_burned_will"],
+      "reveals_clue_id": "clue_torn_velvet"
+    },
+    {
+      "id": "choice_unlock_conservatory",
+      "label": "Access Iron Conservatory",
+      "action_type": "MOVE",
+      "target_id": "room_conservatory",
+      "decision_text": "Obtained Arthur's cooperation to access the south pavilion glasshouse.",
+      "impact_text": "Gained entry to the Iron Conservatory amid the pelting storm.",
+      "prerequisite_clue_ids": ["clue_silver_flask"],
+      "unlocks_location_id": "room_conservatory"
+    },
+    {
+      "id": "choice_search_aconite_bed",
+      "label": "Search Aconite Potting Bed",
+      "action_type": "INSPECT",
+      "target_id": "hs_botanicals",
+      "decision_text": "Searched behind terracotta pots in the humid conservatory.",
+      "impact_text": "Discovered the hidden apothecary vial of arsenic rat poison and marked floor plan.",
+      "prerequisite_clue_ids": ["clue_silver_flask"],
+      "reveals_clue_id": "clue_arsenic_vial"
+    },
+    {
+      "id": "choice_unlock_crypt",
+      "label": "Unlock Vaulted Crypt Cellar",
+      "action_type": "MOVE",
+      "target_id": "room_cellar",
+      "decision_text": "Used Father's brass key entrusted by Victoria to open the iron crypt gate.",
+      "impact_text": "Descended into the damp cobblestone vaults beneath the manor.",
+      "prerequisite_clue_ids": ["clue_torn_velvet"],
+      "prerequisite_flags": { "has_crypt_key": true },
+      "unlocks_location_id": "room_cellar"
+    },
+    {
+      "id": "choice_search_barrel_rack",
+      "label": "Search Barrel Rack 12",
+      "action_type": "INSPECT",
+      "target_id": "hs_barrel_rack",
+      "decision_text": "Searched the hidden recess behind vintage port barrels in the crypt.",
+      "impact_text": "Recovered Julian's secret poison ledger and draft forged codicils.",
+      "prerequisite_clue_ids": ["clue_torn_velvet"],
+      "prerequisite_flags": { "has_crypt_key": true },
+      "reveals_clue_id": "clue_crypt_journal"
+    },
+    {
+      "id": "choice_deliver_verdict",
+      "label": "Deliver Final Inquest Verdict",
+      "action_type": "ACCUSE",
+      "target_id": "char_julian",
+      "decision_text": "Assembled the household in the Grand Foyer to present the formal accusation matrix.",
+      "impact_text": "Delivered the authoritative deduction determining the fate of Blackwood Manor."
+    }
+  ],
+
+  "endings": [
+    {
+      "id": "END_TRUE_RESTITUTION",
+      "title": "The Spirit Laid to Rest: True Restitution",
+      "subtitle": "Exemplary Victory • Case Solved",
+      "verdict_type": "exemplary_victory",
+      "narrative": "Confronted with the silver flask, the tampered clock escapement, and his handwritten poison ledger from the crypt, Lord Julian collapses in tears upon the library floorboards. Scotland Yard constables step out from the shadows as dawn breaks. Arthur's livelihood is protected, Victoria assumes rightful custody of the restored estate, and Lady Eleanor's spirit smiles with profound serenity before dissolving peacefully into the morning mist.",
+      "epilogue": "By November, the autumn storms gave way to crisp frost over the Welsh headlands. With Scotland Yard's formal inquest closed, Lord Julian was transferred to the Old Bailey, his handwritten ledger sealing his conviction. Victoria Blackwood assumed custodianship of the manor, planting white briar roses along the conservatory terrace. Arthur Briggs was granted full tenure and pension as estate bailiff. As for the Séance Parlor, the velvet drapes were drawn back to let the morning sun fill the room. The grandfather clock was repaired by a London horologist, and on quiet evenings, its bells chime twelve pure, silver tones into the peaceful night.",
+      "rating": "Master Occult Detective (Rank S)",
+      "prerequisites": {
+        "required_suspect_id": "char_julian",
+        "required_weapon_clue_id": "clue_silver_flask",
+        "required_motive_clue_id": "clue_burned_will",
+        "min_supporting_clues": 3,
+        "required_supporting_clue_ids": ["clue_thirteenth_chime", "clue_arsenic_vial", "clue_crypt_journal"],
+        "min_player_sanity": 40,
+        "min_character_trust": {
+          "char_caretaker": 50,
+          "char_daughter": 55
+        }
+      }
+    },
+    {
+      "id": "END_TRAGIC_COVERUP",
+      "title": "A Hollow Accusation: Escaped in the Fog",
+      "subtitle": "Partial Victory • Incomplete Inquest",
+      "verdict_type": "hollow_victory",
+      "narrative": "You correctly identified Julian as Eleanor's murderer, but without the poison ledger from the crypt or the testimony of the caretaker, the Crown magistrate rules the evidence merely circumstantial. Julian departs on the morning steamer for the Continent with the family fortune in tow. Victoria flees into bitter obscurity, Arthur is dismissed, and Lady Eleanor's unquiet spirit remains tethered to the library, whispering eternally in the cold curtains.",
+      "epilogue": "The local coroner delivered an open verdict of death by misadventure. Lacking Julian's crypt ledger or Arthur's uncoerced testimony, the Crown prosecutor refused to issue an arrest warrant. Within forty-eight hours, Julian boarded the SS Mauritania bound for South America, having liquidated the family trust through offshore intermediaries. Blackwood Manor fell into foreclosure and shuttered disrepair. Arthur was dismissed without reference, and Victoria vanished into the smog of London. On stormy nights, local villagers still claim that when the church tower strikes midnight, a faint, weeping thirteenth chime can be heard echoing across the empty moor.",
+      "rating": "Inconclusive Inquest (Rank C)",
+      "prerequisites": {
+        "required_suspect_id": "char_julian",
+        "required_weapon_clue_id": "clue_silver_flask",
+        "required_motive_clue_id": "clue_burned_will",
+        "min_supporting_clues": 1,
+        "min_player_sanity": 20
+      }
+    },
+    {
+      "id": "END_SPECTRAL_WRATH",
+      "title": "Wrongful Conviction: The Manor Cursed",
+      "subtitle": "Catastrophic Defeat • Innocent Accused",
+      "verdict_type": "wrongful_conviction",
+      "narrative": "You delivered an erroneous verdict, accusing an innocent member of the household. While suspicious circumstances existed, they had no hand in Lady Eleanor's murder. The wrongful accusation enrages the spirit world. The ward candle explodes in a burst of black flame, plunging the chamber into pitch darkness. A violent poltergeist storm shatters every crystal pane in the manor, claiming the souls of all inside.",
+      "epilogue": "The county records show that in the late autumn of 1922, Blackwood Manor was consumed by an unnatural blaze that burned blue against the sea fog. No bodies were recovered from the charred timbers of the west wing. The coroner concluded that an exploding gas lamp triggered the inferno, but nearby fishermen swear that as the roof collapsed, a towering spectral woman draped in silver mist rose above the flames, screaming curses upon the mortal world. To this day, the blackened stone foundations remain untouched, shunned by beasts and men alike.",
+      "rating": "Tragic Miscarriage of Inquest (Rank F)",
+      "prerequisites": {
+        "min_player_sanity": 0
+      }
+    }
+  ],
+
+  "investigation_topics": [
+    {
+      "id": "death",
+      "title": "Circumstances of Eleanor's Death",
+      "description": "Reconstruct the final hours of Lady Eleanor Blackwood in her locked study.",
+      "category": "crime",
+      "relevant_clue_ids": ["clue_silver_flask", "clue_arsenic_vial"],
+      "known_facts": [
+        "Lady Eleanor was found lifeless on her study carpet shortly after midnight.",
+        "A silver cordial flask was found beside her right hand."
+      ],
+      "suggested_questions": [
+        "What was Lady Eleanor doing in her study before the door was locked?",
+        "Who served Lady Eleanor her final drink?",
+        "Did she exhibit symptoms of sudden distress before midnight?"
+      ],
+      "unresolved_lead": "Determine whether the door was locked from the inside or if an alternate escape route was used.",
+      "min_trust": 0,
+      "required_clue_ids": []
+    },
+    {
+      "id": "thirteenth_chime",
+      "title": "The Thirteenth Chime",
+      "description": "Investigate why the grandfather clock chimed an impossible thirteenth strike at midnight.",
+      "category": "occult",
+      "relevant_clue_ids": ["clue_thirteenth_chime"],
+      "known_facts": [
+        "The clock rang 13 distinct strikes at midnight and jammed at 12:13 AM.",
+        "The chime rang throughout the manor, masking other noises."
+      ],
+      "suggested_questions": [
+        "Did anyone touch the grandfather clock on the evening of the inquest?",
+        "What did you hear when the thirteenth chime echoed through the house?",
+        "Could mechanical tampering cause the chime mechanism to strike thirteen?"
+      ],
+      "unresolved_lead": "Examine the internal escapement gear in the grandfather clock.",
+      "min_trust": 0,
+      "required_clue_ids": []
+    },
+    {
+      "id": "clock",
+      "title": "Astronomical Clockwork Mechanism",
+      "description": "Forensic examination of the horological mechanics inside the grandfather clock.",
+      "category": "evidence",
+      "relevant_clue_ids": ["clue_thirteenth_chime"],
+      "known_facts": [
+        "The brass escapement wheel had its teeth filed down with a fine jeweler's rasp.",
+        "Arthur saw Lord Julian with a jeweler's file at 9:00 PM."
+      ],
+      "suggested_questions": [
+        "Who possessed watchmaker or horological tools in the manor?",
+        "Why was the escapement gear deliberately modified to jam at 12:13?",
+        "Did the clock's strike coincide with the screams or gasps from the study?"
+      ],
+      "unresolved_lead": "Match the file grooves on the escapement gear to Julian's jeweler's rasp.",
+      "min_trust": 20,
+      "required_clue_ids": ["clue_thirteenth_chime"]
+    },
+    {
+      "id": "poison",
+      "title": "Arsenic Trioxide & Valerian Cordial",
+      "description": "Analyze the poison used to assassinate Lady Eleanor and trace its origin.",
+      "category": "evidence",
+      "relevant_clue_ids": ["clue_silver_flask", "clue_arsenic_vial", "clue_crypt_journal"],
+      "known_facts": [
+        "White crystalline arsenic residue lined the rim of Eleanor's valerian flask.",
+        "An amber apothecary vial of rat poison went missing from Arthur's potting bench."
+      ],
+      "suggested_questions": [
+        "Who had access to Arthur's potting bench in the conservatory?",
+        "Did anyone prepare the evening valerian cordial besides Victoria?",
+        "Could the poison have been slipped into the flask before it reached the study?"
+      ],
+      "unresolved_lead": "Connect the amber vial missing from the potting bench to Julian's movements in the garden.",
+      "min_trust": 30,
+      "required_clue_ids": ["clue_silver_flask"]
+    },
+    {
+      "id": "will",
+      "title": "Disinheritance & Will Alteration",
+      "description": "Explore the financial motive behind the murder and the partially burned codicil.",
+      "category": "suspects",
+      "relevant_clue_ids": ["clue_burned_will"],
+      "known_facts": [
+        "Eleanor burned an older will and drafted a new one disinheriting Julian.",
+        "Julian owes £8,500 in Mayfair gaming debts."
+      ],
+      "suggested_questions": [
+        "What was discussed between Eleanor and Julian during their confrontation?",
+        "Who stood to inherit Blackwood Manor under the original terms?",
+        "Was the new draft codicil finalized before Eleanor died?"
+      ],
+      "unresolved_lead": "Recover the drafted codicils and ledger stashed in the crypt.",
+      "min_trust": 35,
+      "required_clue_ids": ["clue_burned_will"]
+    },
+    {
+      "id": "alibis",
+      "title": "Suspect Movements & Alibis",
+      "description": "Track where each inhabitant and visitor was between 9:00 PM and midnight.",
+      "category": "suspects",
+      "relevant_clue_ids": ["clue_torn_velvet"],
+      "known_facts": [
+        "Julian claimed to leave the manor by 9:30 PM, yet was seen near the conservatory later.",
+        "Victoria claims she remained in the séance chamber chanting with Madame Vane."
+      ],
+      "suggested_questions": [
+        "Where exactly were you when the clock struck thirteen?",
+        "Did anyone leave the séance parlor during the ritual?",
+        "Did you see anyone walking the terrace in the rain?"
+      ],
+      "unresolved_lead": "Confirm whether someone entered or fled via the conservatory french doors.",
+      "min_trust": 15,
+      "required_clue_ids": []
+    },
+    {
+      "id": "relationships",
+      "title": "Family Feuds & Secret Tensions",
+      "description": "Investigate the simmering hatred and secret loyalties among the Blackwood family.",
+      "category": "suspects",
+      "relevant_clue_ids": ["clue_torn_velvet", "clue_burned_will"],
+      "known_facts": [
+        "Victoria resented Eleanor's coldness and flirted with occult mediums.",
+        "Arthur has served the family for 35 years and feared losing his home."
+      ],
+      "suggested_questions": [
+        "How did Victoria feel about Eleanor's fortune?",
+        "Why was Arthur so fiercely protective of the manor grounds?",
+        "What was Julian's relationship with Madame Vane?"
+      ],
+      "unresolved_lead": "Discover who supplied Madame Vane's séance ward candles.",
+      "min_trust": 25,
+      "required_clue_ids": []
+    },
+    {
+      "id": "physical_evidence",
+      "title": "Forensic Traces & Crime Scene Markers",
+      "description": "Examine physical evidence recovered from the manor corridors, study, and grounds.",
+      "category": "evidence",
+      "relevant_clue_ids": ["clue_silver_flask", "clue_thirteenth_chime", "clue_arsenic_vial", "clue_torn_velvet", "clue_crypt_journal"],
+      "known_facts": [
+        "Torn crimson velvet thread was snagged on the exterior terrace window latch.",
+        "Forensic chemical tests verify arsenic trioxide in the cordial flask."
+      ],
+      "suggested_questions": [
+        "Whose garment was torn on the conservatory window catch?",
+        "Were there muddy footprints leading from the garden into the cellar?",
+        "What tools were used to tamper with the study lock?"
+      ],
+      "unresolved_lead": "Match the crimson velvet thread to Lord Julian's evening smoking jacket.",
+      "min_trust": 30,
+      "required_clue_ids": ["clue_silver_flask"]
+    },
+    {
+      "id": "contradictions",
+      "title": "Testimony Conflicts & Discrepancies",
+      "description": "Identify where witness statements clash directly with physical evidence.",
+      "category": "crime",
+      "relevant_clue_ids": ["clue_thirteenth_chime", "clue_arsenic_vial", "clue_torn_velvet"],
+      "known_facts": [
+        "Arthur claimed the clock failed on its own, but filed teeth prove deliberate sabotage.",
+        "Julian claimed he never touched rat poison, but his footprints lead to the potting bench."
+      ],
+      "suggested_questions": [
+        "Why does your recollection directly contradict the physical evidence?",
+        "Are you concealing another person's presence in the manor?",
+        "Will you retract your statement now that the truth is uncovered?"
+      ],
+      "unresolved_lead": "Confront the suspects directly using discovered exhibits.",
+      "min_trust": 40,
+      "required_clue_ids": ["clue_thirteenth_chime"]
+    },
+    {
+      "id": "supernatural_events",
+      "title": "Ectoplasmic Disturbance & Séance Communion",
+      "description": "Commune with the lingering spirit of Eleanor and decipher occult omens.",
+      "category": "occult",
+      "relevant_clue_ids": ["clue_silver_flask", "clue_thirteenth_chime", "clue_crypt_journal"],
+      "known_facts": [
+        "The ward candle flickers when Eleanor's spirit draws near.",
+        "The spirit cannot cross threshold lines bordered with salt and sage."
+      ],
+      "suggested_questions": [
+        "What was the last face you saw before darkness took you?",
+        "Did the thirteenth chime sound from this world or beyond?",
+        "What memory remains bound to the cellar crypt?"
+      ],
+      "unresolved_lead": "Channel the spirit in the Séance Parlor using Eleanor's personal belongings.",
+      "min_trust": 20,
+      "required_clue_ids": []
+    }
+  ],
+
+  "contradictions": [
+    {
+      "id": "contra_clock_file_vs_spontaneous",
+      "title": "The Tampered Clock vs Spontaneous Failure",
+      "target_character_id": "char_caretaker",
+      "statement_summary": "Arthur claims the clock mechanism was old and broke spontaneously during the storm.",
+      "contradicting_evidence_id": "clue_thirteenth_chime",
+      "contradiction_detail": "The escapement gear exhibits fresh brass rasp marks from a jeweler's file, proving deliberate sabotage.",
+      "prerequisite_clue_ids": ["clue_thirteenth_chime"],
+      "confrontation_dialogue": "Arthur, look closely at this escapement gear. These aren't century-old wear marks—these teeth were freshly filed with a jeweler's rasp. Someone wanted the clock to strike thirteen at midnight.",
+      "success_trust_delta": 15,
+      "penalty_trust_delta": -10,
+      "revealed_fact": "Arthur confesses he saw Julian Blackwood carrying a watchmaker's jeweler rasp at 9:00 PM.",
+      "unlocks_clue_id": "clue_arsenic_vial"
+    },
+    {
+      "id": "contra_will_destruction_vs_denial",
+      "title": "The Burned Codicil vs Peaceful Family Relations",
+      "target_character_id": "char_daughter",
+      "statement_summary": "Victoria insists the family was at peace and money was never contested.",
+      "contradicting_evidence_id": "clue_burned_will",
+      "contradiction_detail": "The charred will fragment in the grate explicitly strips Julian of his inheritance to satisfy London debts.",
+      "prerequisite_clue_ids": ["clue_burned_will"],
+      "confrontation_dialogue": "Victoria, you spoke of peaceful family ties, yet this half-burned will fragment from Eleanor's hearth reveals an ugly truth: Julian was disinherited over eight thousand pounds of gambling debt.",
+      "success_trust_delta": 15,
+      "penalty_trust_delta": -10,
+      "revealed_fact": "Victoria admits Eleanor threatened to expose Julian's debts and cut him off completely.",
+      "unlocks_clue_id": null
+    },
+    {
+      "id": "contra_poison_source_vs_alibi",
+      "title": "The Stolen Potting Vial vs Accidental Death",
+      "target_character_id": "char_caretaker",
+      "statement_summary": "Arthur suggested Lady Eleanor might have mistakenly drunk cleaning solvent.",
+      "contradicting_evidence_id": "clue_arsenic_vial",
+      "contradiction_detail": "The amber vial from Arthur's potting bench held pure arsenic trioxide and was stolen right when Julian entered the conservatory.",
+      "prerequisite_clue_ids": ["clue_arsenic_vial", "clue_silver_flask"],
+      "confrontation_dialogue": "This wasn't household solvent, Arthur. The amber bottle stolen from your potting bench was concentrated arsenic trioxide, matching the residue in Eleanor's flask.",
+      "success_trust_delta": 20,
+      "penalty_trust_delta": -10,
+      "revealed_fact": "Arthur admits he found the conservatory lock forced and saw Julian running toward the wine cellar.",
+      "unlocks_clue_id": "clue_torn_velvet"
+    },
+    {
+      "id": "contra_door_locked_from_inside_vs_torn_velvet",
+      "title": "Locked Room Mystery vs Crimson Velvet Shred",
+      "target_character_id": "char_daughter",
+      "statement_summary": "Victoria stated no one could have entered the library because Eleanor locked the door from within.",
+      "contradicting_evidence_id": "clue_torn_velvet",
+      "contradiction_detail": "A shred of crimson velvet caught on the exterior window latch proves an intruder exited through the high conservatory terrace window.",
+      "prerequisite_clue_ids": ["clue_torn_velvet"],
+      "confrontation_dialogue": "You claimed the library was sealed and inviolate, Victoria. But look at this crimson velvet thread snagged on the window latch. The killer slipped out through the terrace!",
+      "success_trust_delta": 20,
+      "penalty_trust_delta": -10,
+      "revealed_fact": "Victoria confesses she gave Julian the spare brass key to the crypt when he pleaded for shelter.",
+      "unlocks_clue_id": "clue_crypt_journal"
+    },
+    {
+      "id": "contra_timing_tray_vs_death",
+      "title": "Eleanor's Last Cordial vs The Thirteenth Chime",
+      "target_character_id": "char_apparition",
+      "statement_summary": "The spectral memory was clouded, believing death was an instantaneous blow.",
+      "contradicting_evidence_id": "clue_silver_flask",
+      "contradiction_detail": "The forensic analysis confirms Eleanor drank the poisoned cordial at 11:30 PM, slowly succumbing until the clock chimed thirteen.",
+      "prerequisite_clue_ids": ["clue_silver_flask", "clue_thirteenth_chime"],
+      "confrontation_dialogue": "Lady Eleanor, you did not die in a single heartbeat. You drank the cordial half an hour before midnight. The killer waited for the clock's thirteenth chime to mask your final struggle.",
+      "success_trust_delta": 25,
+      "penalty_trust_delta": -10,
+      "revealed_fact": "Eleanor recalls Julian's face bending over her, murmuring apologies while the clock struck thirteen.",
+      "unlocks_clue_id": null
+    }
+  ],
+
+  "objectives": [
+    {
+      "id": "obj_begin_inquest",
+      "order": 1,
+      "title": "Convene the Inquest",
+      "description": "Interview Caretaker Arthur Briggs in the Foyer and converse with Lady Eleanor's apparition in the Parlor.",
+      "hint": "Speak to the caretaker and spirit to understand the events of the stormy night.",
+      "prerequisite_clue_ids": [],
+      "prerequisite_flags": {},
+      "completion_trigger": "CLUE_DISCOVERED",
+      "target_id": "clue_silver_flask"
+    },
+    {
+      "id": "obj_examine_study",
+      "order": 2,
+      "title": "Examine the Crime Scene",
+      "description": "Unlock and search Lady Eleanor's Locked Library for physical evidence.",
+      "hint": "Gaining the caretaker's trust will unlock access to the locked study.",
+      "prerequisite_clue_ids": ["clue_silver_flask"],
+      "prerequisite_flags": {},
+      "completion_trigger": "LOCATION_UNLOCKED",
+      "target_id": "room_library"
+    },
+    {
+      "id": "obj_clockwork_tampering",
+      "order": 3,
+      "title": "Uncover Horological Tampering",
+      "description": "Inspect the astronomical grandfather clock to discover the filed escapement gear.",
+      "hint": "Search the clock face and mechanism in the Séance Parlor or Library.",
+      "prerequisite_clue_ids": ["clue_silver_flask"],
+      "prerequisite_flags": {},
+      "completion_trigger": "CLUE_DISCOVERED",
+      "target_id": "clue_thirteenth_chime"
+    },
+    {
+      "id": "obj_trace_cordial",
+      "order": 4,
+      "title": "Trace the Poison Source",
+      "description": "Identify the lethal poison and locate the stolen amber arsenic vial in the Conservatory.",
+      "hint": "Confront Arthur about the clock tampering to unlock access to the Conservatory.",
+      "prerequisite_clue_ids": ["clue_thirteenth_chime"],
+      "prerequisite_flags": {},
+      "completion_trigger": "CLUE_DISCOVERED",
+      "target_id": "clue_arsenic_vial"
+    },
+    {
+      "id": "obj_uncover_will",
+      "order": 5,
+      "title": "Expose Financial Motive",
+      "description": "Recover the partially burned will codicil from the library grate.",
+      "hint": "Inspect the hearth inside the locked library.",
+      "prerequisite_clue_ids": ["clue_silver_flask"],
+      "prerequisite_flags": {},
+      "completion_trigger": "CLUE_DISCOVERED",
+      "target_id": "clue_burned_will"
+    },
+    {
+      "id": "obj_infiltrate_crypt",
+      "order": 6,
+      "title": "Infiltrate the Family Crypt",
+      "description": "Confront Victoria with the torn crimson velvet to secure the crypt key and recover Julian's poison ledger.",
+      "hint": "Present the crimson velvet shred to Victoria and inspect barrel rack 12 in the crypt.",
+      "prerequisite_clue_ids": ["clue_torn_velvet"],
+      "prerequisite_flags": { "has_crypt_key": true },
+      "completion_trigger": "CLUE_DISCOVERED",
+      "target_id": "clue_crypt_journal"
+    },
+    {
+      "id": "obj_deliver_verdict",
+      "order": 7,
+      "title": "Deliver Authoritative Inquest Verdict",
+      "description": "Assemble the household in the Grand Foyer and present the complete accusation matrix against Lord Julian.",
+      "hint": "Ensure you possess the silver flask, burned will, clock escapement, arsenic vial, and crypt ledger before accusing.",
+      "prerequisite_clue_ids": ["clue_silver_flask", "clue_burned_will", "clue_thirteenth_chime", "clue_arsenic_vial", "clue_crypt_journal"],
+      "prerequisite_flags": {},
+      "completion_trigger": "VERDICT_DELIVERED",
+      "target_id": "char_julian"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Victorian Gothic Palette */
+    --bg-charcoal: #0c0b0e;
+    --bg-obsidian: #060507;
+    --bg-mahogany: #171210;
+    --bg-burgundy: #1a0b10;
+    --bg-card: #131012;
+    --bg-parchment-dark: #221c17;
+    --bg-parchment-light: #ece3cd;
+
+    --border-brass: #c5a059;
+    --border-brass-muted: rgba(197, 160, 89, 0.25);
+    --border-crimson: #5c181f;
+
+    --accent-brass: #c5a059;
+    --accent-brass-bright: #dfc282;
+    --accent-amber: #e29d42;
+    --accent-candle: #f5b041;
+    --accent-crimson: #8a1f29;
+    --accent-spirit: #6da3a1;
+
+    --text-parchment: #ece3cd;
+    --text-parchment-muted: #b8a88a;
+    --text-dim: #7d7265;
+
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg-obsidian);
+    color: var(--text-parchment);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    background-image: 
+      radial-gradient(circle at 50% 10%, rgba(26, 11, 16, 0.6) 0%, transparent 60%),
+      radial-gradient(circle at 10% 90%, rgba(23, 18, 16, 0.5) 0%, transparent 50%),
+      linear-gradient(to bottom, #060507, #0c0b0e, #070608);
+  }
+
+  h1, h2, h3, h4, .font-gothic {
+    font-family: Georgia, "Times New Roman", "Baskerville", "Playfair Display", serif;
+    letter-spacing: 0.04em;
+  }
+
+  code, pre, .font-telegraph {
+    font-family: "Courier New", Courier, "Lucida Console", monospace;
+  }
+
+  /* Custom Victorian Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #09080a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3a2e22;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c5a059;
+  }
+
+  /* Focus rings styled in antique brass for accessibility */
+  *:focus-visible {
+    outline: 2px solid #c5a059;
+    outline-offset: 2px;
+  }
+}
+
+/* Restrained Candle Flame Animation */
+@keyframes candle-flicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 8px rgba(245, 176, 65, 0.5));
+  }
+  25% {
+    transform: scale(1.04, 0.96) rotate(-1deg);
+    opacity: 0.88;
+    filter: drop-shadow(0 0 6px rgba(245, 176, 65, 0.35));
+  }
+  50% {
+    transform: scale(0.97, 1.03) rotate(0.8deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(245, 176, 65, 0.6));
+  }
+  75% {
+    transform: scale(1.02, 0.98) rotate(-0.5deg);
+    opacity: 0.92;
+    filter: drop-shadow(0 0 7px rgba(245, 176, 65, 0.4));
+  }
+}
+
+.animate-candle-flame {
+  animation: candle-flicker 2.8s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* Subtle Occult Seal Pulse */
+@keyframes seal-pulse {
+  0%, 100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.02);
+  }
+}
+
+.animate-seal-pulse {
+  animation: seal-pulse 4.5s ease-in-out infinite;
+}
+
+/* Gentle atmospheric fog drift */
+@keyframes fog-drift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-candle-flame,
+  .animate-seal-pulse,
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Ornate Victorian Borders & Cards */
+.gothic-card {
+  background-color: rgba(19, 16, 18, 0.88);
+  border: 1px solid rgba(197, 160, 89, 0.22);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.75), inset 0 0 1px rgba(197, 160, 89, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.gothic-card-hover {
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gothic-card-hover:hover {
+  border-color: rgba(197, 160, 89, 0.45);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.85), inset 0 0 8px rgba(197, 160, 89, 0.08);
+}
+
+/* Aged Parchment Card Style */
+.parchment-sheet {
+  background-color: #1f1914;
+  color: #ece3cd;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
+  position: relative;
+}
+
+/* Subtle corner filigree accents */
+.ornate-corners {
+  position: relative;
+}
+
+.ornate-corners::before,
+.ornate-corners::after {
+  content: "✦";
+  position: absolute;
+  font-size: 8px;
+  color: #c5a059;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ornate-corners::before {
+  top: 4px;
+  left: 5px;
+}
+
+.ornate-corners::after {
+  bottom: 4px;
+  right: 5px;
+}
+
+/* Sanity Vignette Overlay */
+.sanity-vignette {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(92, 24, 31, 0.25);
+  transition: box-shadow 0.5s ease;
+}
+
+/* Thin ornamental divider with center diamond */
+.brass-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #c5a059;
+  margin: 1rem 0;
+}
+
+.brass-divider::before,
+.brass-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.25);
+}
+
+.brass-divider:not(:empty)::before {
+  margin-right: 0.75em;
+}
+
+.brass-divider:not(:empty)::after {
+  margin-left: 0.75em;
+}

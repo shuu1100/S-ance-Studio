@@ -1,0 +1,88 @@
+# ==============================================================================
+# Séance Studio — Git Ignore Configuration
+# ==============================================================================
+
+# Node.js & Frontend dependencies
+node_modules/
+.pnp
+.pnp.js
+.next/
+out/
+build/
+dist/
+.turbo/
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+.pytest_cache/
+
+# Python & Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+
+# Local Databases & WAL Files (Preserve structure, ignore runtime data)
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/data/*.db*
+data/*.db*
+
+# Environment configurations (Never commit active secrets or local paths)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE & OS Transient Files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+Desktop.ini
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Next.js
+.next/
+node_modules/
+out/
+
+# Local database and runtime data
+*.db
+*.sqlite
+*.sqlite3
+backend/data/
+
+# Logs
+*.log
